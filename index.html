@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pastel T-Shirt Shop</title>
+  <style>
+    /* Algemene opmaak */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fef6f9;
+      color: #444;
+    }
+    /* Header */
+    header {
+      background-color: #ffdde1;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      color: #663366;
+      position: relative;
+    }
+    /* Winkelwagen knop rechtsboven */
+    .open-cart-btn {
+      position: absolute;
+      top: 25px;
+      right: 20px;
+      padding: 8px 12px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #ffb3c6;
+      border: none;
+      border-radius: 20px;
+      color: white;
+      transition: background-color 0.2s ease;
+    }
+    .open-cart-btn:hover {
+      background-color: #ff94af;
+    }
+    /* Productoverzicht */
+    .shop {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      padding: 40px;
+    }
+    /* Elke individuele productkaart */
+    .product {
+      background-color: white;
+      padding: 20px;
+      border-radius: 20px;
+      width: 280px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+    .product:hover {
+      transform: scale(1.03);
+    }
+    /* Productafbeelding */
+    .product img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+    /* Prijs-stijl */
+    .price {
+      font-size: 18px;
+      color: #ff6699;
+      margin: 10px 0;
+    }
+    /* Knoppen */
+    button {
+      background-color: #ffb3c6;
+      border: none;
+      padding: 10px 20px;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.2s ease;
+    }
+    button:hover {
+      background-color: #ff94af;
+    }
+    /* Winkelwagen sidebar */
+    .cart-sidebar {
+      position: fixed;
+      top: 0;
+      right: -350px;
+      width: 350px;
+      height: 100vh;
+      background: #fdf6f0;
+      box-shadow: -3px 0 10px rgba(0,0,0,0.2);
+      padding: 20px;
+      transition: right 0.3s ease;
+      overflow-y: auto;
+      z-index: 1000;
+    }
+    .cart-sidebar.open {
+      right: 0;
+    }
+    .close-cart {
+      background: none;
+      border: none;
+      font-size: 24px;
+      float: right;
+      cursor: pointer;
+    }
+    .cart-items {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+    .cart-items li {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+    .checkout {
+      background-color: #ff6699;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+      transition: background-color 0.2s ease;
+    }
+    .checkout:hover {
+      background-color: #e65585;
+    }
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #ffe6e9;
+      color: #aa6688;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🌸 Pastel T-Shirt Shop</h1>
+    <button onclick="toggleCart()" class="open-cart-btn">
+      🛒 Winkelwagen (<span id="cart-count">0</span>)
+    </button>
+  </header>
+
+  <!-- Winkelwagen Sidebar -->
+  <div id="cart-sidebar" class="cart-sidebar">
+    <button class="close-cart" onclick="toggleCart()">✖️</button>
+    <h2>Winkelwagen</h2>
+    <ul id="cart-items" class="cart-items"></ul>
+    <p>Totaal: €<span id="cart-total">0.00</span></p>
+    <button onclick="afrekenen()" class="checkout">🧾 Naar afrekenen</button>
+  </div>
+
+  <main class="shop">
+
+    <!-- PRODUCTEN met online afbeeldingen -->
+    <div class="product">
+      <img src="https://via.placeholder.com/280x280/ffe0ec/663366?text=Roze+T-shirt" alt="Roze T-shirt" />
+      <h2>Roze T-shirt</h2>
+      <p class="price">€19,99</p>
+      <button onclick="voegToe('Roze T-shirt', 19.99)">Toevoegen</button>
+    </div>
+
+    <div class="product">
+      <img src="https://via.placeholder.com/280x280/9ec5fe/2b3a67?text=Blauw+T-shirt" alt="Blauw T-shirt" />
+      <h2>Blauw T-shirt</h2>
+      <p class="price">€21,99</p>
+      <button onclick="voegToe('Blauw T-shirt', 21.99)">Toevoegen</button>
+    </div>
+
+    <div class="product">
+      <img src="https://via.placeholder.com/280x280/a4d4ae/2b4f2b?text=Groen+T-shirt" alt="Groen T-shirt" />
+      <h2>Groen T-shirt</h2>
+      <p class="price">€18,50</p>
+      <button onclick="voegToe('Groen T-shirt', 18.50)">Toevoegen</button>
+    </div>
+
+    <div class="product">
+      <img src="https://via.placeholder.com/280x280/d0b7ff/5a3d99?text=Lavendel+T-shirt" alt="Lavendel T-shirt" />
+      <h2>Lavendel T-shirt</h2>
+      <p class="price">€22,00</p>
+      <button onclick="voegToe('Lavendel T-shirt', 22.00)">Toevoegen</button>
+    </div>
+
+    <div class="product">
+      <img src="https://via.placeholder.com/280x280/fff6b4/8b8000?text=Zachtgele+T-shirt" alt="Zachtgele T-shirt" />
+      <h2>Zachtgele T-shirt</h2>
+      <p class="price">€20,99</p>
+      <button onclick="voegToe('Zachtgele T-shirt', 20.99)">Toevoegen</button>
+    </div>
+
+    <div class="product">
+      <img src="https://via.placeholder.com/280x280/ffb974/9b5600?text=Oranje+T-shirt" alt="Oranje T-shirt" />
+      <h2>Oranje T-shirt</h2>
+      <p class="price">€19,50</p>
+      <button onclick="voegToe('Oranje T-shirt', 19.50)">Toevoegen</button>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>© 2025 Pastel Shop</p>
+  </footer>
+
+  <script>
+    let winkelwagen = [];
+
+    function toggleCart() {
+      document.getElementById('cart-sidebar').classList.toggle('open');
+    }
+
+    function voegToe(product, prijs) {
+      const bestaand = winkelwagen.find(item => item.naam === product);
+      if (bestaand) {
+        bestaand.aantal++;
+      } else {
+        winkelwagen.push({ naam: product, prijs: prijs, aantal: 1 });
+      }
+      updateCartUI();
+      alert(`${product} toegevoegd aan je winkelwagen!`);
+    }
+
+    function updateCartUI() {
+      const lijst = document.getElementById('cart-items');
+      lijst.innerHTML = '';
+
+      winkelwagen.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.naam} x${item.aantal} - €${(item.prijs * item.aantal).toFixed(2)}`;
+        lijst.appendChild(li);
+      });
+
+      const totaal = winkelwagen.reduce((sum, item) => sum + item.prijs * item.aantal, 0);
+      document.getElementById('cart-total').textContent = totaal.toFixed(2);
+      document.getElementById('cart-count').textContent = winkelwagen.reduce((sum, item) => sum + item.aantal, 0);
+    }
+
+    function afrekenen() {
+      if (winkelwagen.length === 0) {
+        alert("Je winkelwagen is leeg!");
+        return;
+      }
+
+      let totaal = winkelwagen.reduce((sum, item) => sum + item.prijs * item.aantal, 0);
+      let bevestiging = confirm(`Je totaal is €${totaal.toFixed(2)}\nWil je afrekenen?`);
+      if (bevestiging) {
+        alert("Bedankt voor je aankoop!");
+        winkelwagen = [];
+        updateCartUI();
+        toggleCart();
+      }
+    }
+
+    // Init UI
+    updateCartUI();
+  </script>
+</body>
+</html>
+
