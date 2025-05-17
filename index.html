@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>Pastel T-Shirt Shop</title>
   <style>
-    /* CSS hier zoals je eerder stuurde */
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -81,6 +80,25 @@
       background-color: #ffe6e9;
       color: #aa6688;
     }
+    #winkelwagen-overzicht {
+      display: none;
+      padding: 40px;
+    }
+    table {
+      width: 100%;
+      max-width: 600px;
+      margin: auto;
+      border-collapse: collapse;
+      background: white;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    th {
+      background-color: #ffdde1;
+    }
   </style>
 </head>
 <body>
@@ -135,6 +153,20 @@
     </div>
   </main>
 
+  <section id="winkelwagen-overzicht">
+    <h2>🛍️ Je winkelwagen</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Prijs</th>
+        </tr>
+      </thead>
+      <tbody id="winkelwagen-tabel"></tbody>
+    </table>
+    <p id="winkelwagen-totaal" style="text-align:center; font-weight:bold; margin-top:10px;"></p>
+  </section>
+
   <div class="checkout">
     <button onclick="afrekenen()">🧾 Naar afrekenen</button>
   </div>
@@ -149,7 +181,30 @@
     function voegToe(product, prijs) {
       winkelwagen.push({ naam: product, prijs: prijs });
       document.getElementById("cart-count").textContent = winkelwagen.length;
+      toonWinkelwagen();
       alert(`${product} toegevoegd aan je winkelwagen!`);
+    }
+
+    function toonWinkelwagen() {
+      const overzicht = document.getElementById("winkelwagen-overzicht");
+      const tabel = document.getElementById("winkelwagen-tabel");
+      const totaalEl = document.getElementById("winkelwagen-totaal");
+
+      tabel.innerHTML = "";
+      let totaal = 0;
+
+      if (winkelwagen.length > 0) {
+        overzicht.style.display = "block";
+      }
+
+      winkelwagen.forEach(item => {
+        const row = document.createElement("tr");
+        row.innerHTML = `<td>${item.naam}</td><td>€${item.prijs.toFixed(2)}</td>`;
+        tabel.appendChild(row);
+        totaal += item.prijs;
+      });
+
+      totaalEl.textContent = `Totaalbedrag: €${totaal.toFixed(2)}`;
     }
 
     function afrekenen() {
