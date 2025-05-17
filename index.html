@@ -1,224 +1,47 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Pastel T-Shirt Shop</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #fef6f9;
-      color: #444;
-    }
-    header {
-      background-color: #ffdde1;
-      padding: 20px;
-      text-align: center;
-      font-size: 24px;
-      color: #663366;
-      position: relative;
-    }
-    .cart-icon {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: white;
-      padding: 6px 12px;
-      border-radius: 20px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-      font-size: 14px;
-    }
-    .shop {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      padding: 40px;
-    }
-    .product {
-      background-color: white;
-      padding: 20px;
-      border-radius: 20px;
-      width: 280px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      text-align: center;
-      transition: transform 0.2s ease;
-    }
-    .product:hover {
-      transform: scale(1.03);
-    }
-    .product img {
-      width: 100%;
-      border-radius: 12px;
-      margin-bottom: 10px;
-    }
-    .price {
-      font-size: 18px;
-      color: #ff6699;
-      margin: 10px 0;
-    }
-    button {
-      background-color: #ffb3c6;
-      border: none;
-      padding: 10px 20px;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: background-color 0.2s ease;
-    }
-    button:hover {
-      background-color: #ff94af;
-    }
-    .checkout {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background-color: #ffe6e9;
-      color: #aa6688;
-    }
-    #winkelwagen-overzicht {
-      display: none;
-      padding: 40px;
-    }
-    table {
-      width: 100%;
-      max-width: 600px;
-      margin: auto;
-      border-collapse: collapse;
-      background: white;
-    }
-    th, td {
-      padding: 10px;
-      border: 1px solid #ccc;
-      text-align: left;
-    }
-    th {
-      background-color: #ffdde1;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
     <h1>🌸 Pastel T-Shirt Shop</h1>
-    <div class="cart-icon">
-      🛒 Winkelwagen: <span id="cart-count">0</span>
-    </div>
+    <!-- Oude teller vervangen door knop met teller -->
+    <button onclick="toggleCart()" class="open-cart-btn">
+      🛒 Winkelwagen (<span id="cart-count">0</span>)
+    </button>
   </header>
 
+  <!-- Winkelwagen Sidebar -->
+  <div id="cart-sidebar" class="cart-sidebar">
+    <button class="close-cart" onclick="toggleCart()">✖️</button>
+    <h2>Winkelwagen</h2>
+    <ul id="cart-items" class="cart-items"></ul>
+    <p>Totaal: €<span id="cart-total">0.00</span></p>
+    <button onclick="afrekenen()" class="checkout">🧾 Naar afrekenen</button>
+  </div>
+
   <main class="shop">
+
+    <!-- PRODUCTEN zoals jij al had -->
+
+    <!-- PRODUCT 1 -->
     <div class="product">
-      <img src="https://via.placeholder.com/280x280/ffb6c1/000000?text=Roze+T-shirt" alt="Roze T-shirt" />
+      <img src="tshirt1.jpg" alt="Roze T-shirt">
       <h2>Roze T-shirt</h2>
       <p class="price">€19,99</p>
       <button onclick="voegToe('Roze T-shirt', 19.99)">Toevoegen</button>
     </div>
+    <!-- (rest van producten onveranderd) -->
 
-    <div class="product">
-      <img src="https://via.placeholder.com/280x280/87cefa/000000?text=Blauw+T-shirt" alt="Blauw T-shirt" />
-      <h2>Blauw T-shirt</h2>
-      <p class="price">€21,99</p>
-      <button onclick="voegToe('Blauw T-shirt', 21.99)">Toevoegen</button>
-    </div>
-
-    <div class="product">
-      <img src="https://via.placeholder.com/280x280/98fb98/000000?text=Groen+T-shirt" alt="Groen T-shirt" />
-      <h2>Groen T-shirt</h2>
-      <p class="price">€18,50</p>
-      <button onclick="voegToe('Groen T-shirt', 18.50)">Toevoegen</button>
-    </div>
-
-    <div class="product">
-      <img src="https://via.placeholder.com/280x280/d8bfd8/000000?text=Lavendel+T-shirt" alt="Lavendel T-shirt" />
-      <h2>Lavendel T-shirt</h2>
-      <p class="price">€22,00</p>
-      <button onclick="voegToe('Lavendel T-shirt', 22.00)">Toevoegen</button>
-    </div>
-
-    <div class="product">
-      <img src="https://via.placeholder.com/280x280/fffacd/000000?text=Zachtgele+T-shirt" alt="Zachtgele T-shirt" />
-      <h2>Zachtgele T-shirt</h2>
-      <p class="price">€20,99</p>
-      <button onclick="voegToe('Zachtgele T-shirt', 20.99)">Toevoegen</button>
-    </div>
-
-    <div class="product">
-      <img src="https://via.placeholder.com/280x280/ffa500/000000?text=Oranje+T-shirt" alt="Oranje T-shirt" />
-      <h2>Oranje T-shirt</h2>
-      <p class="price">€19,50</p>
-      <button onclick="voegToe('Oranje T-shirt', 19.50)">Toevoegen</button>
-    </div>
   </main>
-
-  <section id="winkelwagen-overzicht">
-    <h2>🛍️ Je winkelwagen</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>Prijs</th>
-        </tr>
-      </thead>
-      <tbody id="winkelwagen-tabel"></tbody>
-    </table>
-    <p id="winkelwagen-totaal" style="text-align:center; font-weight:bold; margin-top:10px;"></p>
-  </section>
-
-  <div class="checkout">
-    <button onclick="afrekenen()">🧾 Naar afrekenen</button>
-  </div>
 
   <footer>
     <p>© 2025 Pastel Shop</p>
   </footer>
 
-  <script>
-    let winkelwagen = [];
-
-    function voegToe(product, prijs) {
-      winkelwagen.push({ naam: product, prijs: prijs });
-      document.getElementById("cart-count").textContent = winkelwagen.length;
-      toonWinkelwagen();
-      alert(`${product} toegevoegd aan je winkelwagen!`);
-    }
-
-    function toonWinkelwagen() {
-      const overzicht = document.getElementById("winkelwagen-overzicht");
-      const tabel = document.getElementById("winkelwagen-tabel");
-      const totaalEl = document.getElementById("winkelwagen-totaal");
-
-      tabel.innerHTML = "";
-      let totaal = 0;
-
-      if (winkelwagen.length > 0) {
-        overzicht.style.display = "block";
-      }
-
-      winkelwagen.forEach(item => {
-        const row = document.createElement("tr");
-        row.innerHTML = `<td>${item.naam}</td><td>€${item.prijs.toFixed(2)}</td>`;
-        tabel.appendChild(row);
-        totaal += item.prijs;
-      });
-
-      totaalEl.textContent = `Totaalbedrag: €${totaal.toFixed(2)}`;
-    }
-
-    function afrekenen() {
-      if (winkelwagen.length === 0) {
-        alert("Je winkelwagen is leeg!");
-        return;
-      }
-
-      let totaal = winkelwagen.reduce((sum, item) => sum + item.prijs, 0);
-      let bevestiging = confirm(`Je totaal is €${totaal.toFixed(2)}\nWil je afrekenen?`);
-      if (bevestiging) {
-        window.location.href = "https://buy.stripe.com/test_5kQ14m12D6R6gI92iO9sk00";
-      }
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
